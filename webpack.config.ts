@@ -1,7 +1,5 @@
 import path from "path";
 
-const webpack = require("webpack");
-
 module.exports = {
     mode: 'development',
     entry: {
@@ -9,16 +7,27 @@ module.exports = {
     },
     output: {
         path: path.resolve('./dist'), // 절대경로 입력
-        filename: '[name].tsx?[hash]'
+        filename: '[name].tsx',
+        assetModuleFilename: '[name][ext][hash][query]'
     },
     module: {
         rules: [
            {
                 test:/\.css$/i,
-                use: ['style-loader','css-loader']
-           } 
+                use: ['style-loader', {
+                    loader:'css-loader',
+                    
+                }]
+            },
+            {
+                test:/\.(png|jpg)$/,
+                type: 'asset/resource',
+                
+            },
+            {
+                test:/\.(png|jpg)$/,
+                type: 'asset/inline',
+            }
         ]
-
-        
     }
 }
